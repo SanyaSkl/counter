@@ -1,22 +1,50 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './Counter.css'
+import {Button} from "../Button/Button";
 
-export const Counter = () => {
-    const[count, setCount] = useState(0)
+
+type CountType = {
+    count: number
+    setCount: (count: number) => void
+    disabledInc: boolean
+    setDisabledInc: (disabledInc: boolean) => void
+    disableReset: boolean
+    setDisableReset: (reset: boolean) => void
+}
+
+export const Counter = (props: CountType) => {
+    const {count, setCount, disabledInc, setDisabledInc, disableReset, setDisableReset} = props
 
     const incrementCount = () => {
-        setCount(count + 1)
+        if (count <= 4) {
+            setCount(count + 1)
+            setDisableReset(false)
+        } else {
+            setDisabledInc(true)
+        }
     }
-    // const disableInc = () => {
-    //
-    // }
+
+    const resetCounter = () => {
+        setCount(0);
+        setDisabledInc(false)
+        setDisableReset(true)
+    }
+
 
     return (
         <div className="counterBox">
             <h1 className="scoreboard">{count}</h1>
             <div className="buttonBox">
-            <button className="button" onClick={incrementCount}>Inc</button>
-            <button className="button" onClick={incrementCount}>Reset</button>
+                <Button
+                    className={'button'}
+                    name={'Inc'}
+                    onClick={incrementCount}
+                    disabled={disabledInc}/>
+                <Button
+                    className={'button'}
+                    name={'Reset'}
+                    onClick={resetCounter}
+                    disabled={disableReset}/>
             </div>
         </div>
     );

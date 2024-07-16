@@ -22,6 +22,10 @@ background-color: #352b3d;
     color: #61dafb;
 }
 
+.countEnd {
+    color: red;
+}
+
 .buttonBox {
     display: flex;
     flex-direction: row;
@@ -32,16 +36,5 @@ background-color: #352b3d;
     margin: 10px;
     align-items: center;
     justify-content: space-around;
-
 }
 
-.button {
-    height: 40px;
-    width: 80px;
-    border-radius: 10px;
-    border-color: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #d7ccec;
-}

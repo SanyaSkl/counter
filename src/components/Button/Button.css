@@ -1,0 +1,11 @@
+
+.button {
+    height: 40px;
+    width: 80px;
+    border-radius: 10px;
+    border-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d7ccec;
+}
