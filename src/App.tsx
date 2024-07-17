@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Counter} from "./components/Counter/Counter";
+import {SettingsBlock} from "./components/SettingsBlock/SettingsBlock";
 
 function App() {
     const [count, setCount] = useState(0)
@@ -10,6 +11,7 @@ function App() {
 
     return (
         <div className="App">
+            <SettingsBlock/>
             <Counter
                 count={count}
                 setCount={setCount}

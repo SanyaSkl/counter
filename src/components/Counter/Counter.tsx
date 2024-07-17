@@ -3,7 +3,7 @@ import './Counter.css'
 import {Button} from "../Button/Button";
 
 
-type CountType = {
+export type CountType = {
     count: number
     setCount: (count: number) => void
     disabledInc: boolean
