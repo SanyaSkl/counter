@@ -11,7 +11,7 @@
     padding: 10px;
 }
 
-.scoreboard {
+.scoreboard, .countEnd {
     border: 3px solid #d7ccec;
     border-radius: 10px;
     height: 125px;
@@ -25,6 +25,7 @@
 
 .countEnd {
     color: red;
+    font-size: 3rem;
 }
 
 .buttonBox {

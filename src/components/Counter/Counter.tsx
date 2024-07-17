@@ -33,7 +33,7 @@ export const Counter = (props: CountType) => {
 
     return (
         <div className="counterBox">
-            <h1 className="scoreboard">{count}</h1>
+            <h1 className={count === 5 ? "countEnd" : "scoreboard"}>{count}</h1>
             <div className="buttonBox">
                 <Button
                     className={'button'}
