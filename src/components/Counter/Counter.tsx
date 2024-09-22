@@ -4,47 +4,62 @@ import {Button} from "../Button/Button";
 
 
 export type CountType = {
-    count: number
-    setCount: (count: number) => void
-    disabledInc: boolean
-    setDisabledInc: (disabledInc: boolean) => void
-    disableReset: boolean
-    setDisableReset: (reset: boolean) => void
+    count: number;
+    setCount: (count: number) => void;
+    maxValue: number;
+    startValue: number;
+    errorMessage: string;
+    disabledInc: boolean;
+    setDisabledInc: (disabledInc: boolean) => void;
+    disableReset: boolean;
+    setDisableReset: (reset: boolean) => void;
 }
 
 export const Counter = (props: CountType) => {
-    const {count, setCount, disabledInc, setDisabledInc, disableReset, setDisableReset} = props
+    const {
+        count,
+        setCount,
+        maxValue,
+        startValue,
+        errorMessage,
+        disabledInc,
+        setDisabledInc,
+        disableReset,
+        setDisableReset,
+    } = props
 
     const incrementCount = () => {
-        if (count <= 4) {
-            setCount(count + 1)
-            setDisableReset(false)
+        if (count < maxValue) {
+            setCount(count + 1);
+            setDisableReset(false);
         } else {
-            setDisabledInc(true)
+            setDisabledInc(true);
         }
-    }
+    };
 
     const resetCounter = () => {
-        setCount(0);
-        setDisabledInc(false)
-        setDisableReset(true)
-    }
-
+        setCount(startValue);
+        setDisabledInc(false);
+        setDisableReset(true);
+    };
 
     return (
         <div className="counterBox">
-            <h1 className={count === 5 ? "countEnd" : "scoreboard"}>{count}</h1>
+            <h1 className={count === maxValue ? "countEnd" : "scoreboard"}>{count}</h1>
+            <p style={{ color: "red" }}>{errorMessage}</p>
             <div className="buttonBox">
                 <Button
                     className={'button'}
                     name={'Inc'}
                     onClick={incrementCount}
-                    disabled={disabledInc}/>
+                    disabled={disabledInc}
+                />
                 <Button
                     className={'button'}
                     name={'Reset'}
                     onClick={resetCounter}
-                    disabled={disableReset}/>
+                    disabled={disableReset}
+                />
             </div>
         </div>
     );
