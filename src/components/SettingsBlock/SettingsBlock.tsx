@@ -1,28 +1,18 @@
 import React, { ChangeEvent, useState } from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {SettingBlockType} from "../../App/App";
+import {AppRootState} from "../../App/store";
+import {setErrorMessageAC, updateSettingsAC} from "../../model/counter-reducer";
 import { Button } from "../Button/Button";
 import './SettingsBlock.css';
 
-type SettingsBlockType = {
-    maxValue: number;
-    startValue: number;
-    setErrorMessage: (incorrectValue: string) => void;
-    errorMessage: string;
-    updateSettings: (newMaxValue: number, newStartValue: number) => void;
-    disabledSet: boolean
-    setDisabledSet:(disabledSet: boolean) => void
-};
-
-
-export const SettingsBlock = (props: SettingsBlockType) => {
+export const SettingsBlock = () => {
+    const dispatch = useDispatch()
     const {
         maxValue,
         startValue,
         errorMessage,
-        setErrorMessage,
-        updateSettings,
-        disabledSet,
-        setDisabledSet
-    } = props;
+    } = useSelector<AppRootState, SettingBlockType>((state) => state.counter)
 
     const [tempMaxValue, setTempMaxValue] = useState(maxValue);
     const [tempStartValue, setTempStartValue] = useState(startValue);
@@ -31,38 +21,32 @@ export const SettingsBlock = (props: SettingsBlockType) => {
         const value = parseInt(e.currentTarget.value);
 
         if (value < 0) {
-            setErrorMessage('Incorrect value');
+            dispatch(setErrorMessageAC('Incorrect value'));
             e.currentTarget.style.border = '2px solid red';
-            setDisabledSet(true)
-
         } else {
-            setErrorMessage("");
+            dispatch(setErrorMessageAC(''));
             e.currentTarget.style.border = 'none';
             setTempMaxValue(value);
-            setDisabledSet(false)
         }
     };
 
     const handleStartValueChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(e.currentTarget.value);
 
-        if (value < 0) {
-            setErrorMessage("Incorrect value");
-            e.currentTarget.style.border = '2px solid red';
-        } else if (value > tempMaxValue) {
-            setErrorMessage("Incorrect value");
+        if (value < 0 || value > tempMaxValue) {
+            dispatch(setErrorMessageAC("Incorrect value"));
             e.currentTarget.style.border = '2px solid red';
         } else {
-            setErrorMessage("");
+            dispatch(setErrorMessageAC(''));
             e.currentTarget.style.border = 'none';
             setTempStartValue(value);
-            setDisabledSet(false);
         }
     };
 
     const setValues = () => {
         if (errorMessage === "") {
-            updateSettings(tempMaxValue, tempStartValue);
+            dispatch(updateSettingsAC(
+                { maxValue: tempMaxValue, startValue: tempStartValue }))
         }
     };
 
@@ -86,7 +70,7 @@ export const SettingsBlock = (props: SettingsBlockType) => {
             </div>
 
             <div className="buttonBox">
-                <Button name={"Set"} onClick={setValues} className={'button'} disabled={disabledSet}/>
+                <Button name={"Set"} onClick={setValues} className={'button'} disabled={!!errorMessage}/>
             </div>
         </div>
     );

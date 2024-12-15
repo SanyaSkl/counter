@@ -1,52 +1,35 @@
 import React from 'react';
-import './Counter.css'
+import {useDispatch, useSelector} from "react-redux";
+import {CounterType} from "../../App/App";
+import {AppRootState} from "../../App/store";
+import {incrementAC, resetAC} from "../../model/counter-reducer";
 import {Button} from "../Button/Button";
+import './Counter.css'
 
-
-export type CountType = {
-    count: number;
-    setCount: (count: number) => void;
-    maxValue: number;
-    startValue: number;
-    errorMessage: string;
-    disabledInc: boolean;
-    setDisabledInc: (disabledInc: boolean) => void;
-    disableReset: boolean;
-    setDisableReset: (reset: boolean) => void;
-}
-
-export const Counter = (props: CountType) => {
+export const Counter = () => {
+    const dispatch = useDispatch()
     const {
         count,
-        setCount,
         maxValue,
-        startValue,
         errorMessage,
         disabledInc,
-        setDisabledInc,
-        disableReset,
-        setDisableReset,
-    } = props
+        disableReset
+    } = useSelector<AppRootState, CounterType>((state) => state.counter)
 
     const incrementCount = () => {
         if (count < maxValue) {
-            setCount(count + 1);
-            setDisableReset(false);
-        } else {
-            setDisabledInc(true);
+            dispatch(incrementAC())
         }
     };
 
     const resetCounter = () => {
-        setCount(startValue);
-        setDisabledInc(false);
-        setDisableReset(true);
+        dispatch(resetAC())
     };
 
     return (
         <div className="counterBox">
             <h1 className={count === maxValue ? "countEnd" : "scoreboard"}>{count}</h1>
-            <p style={{ color: "red" }}>{errorMessage}</p>
+            <p style={{color: "red"}}>{errorMessage}</p>
             <div className="buttonBox">
                 <Button
                     className={'button'}
